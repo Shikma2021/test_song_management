@@ -1,22 +1,18 @@
 import pytest
 from sources.services import users_service
 from sources.entities import User
-from utils.cofig_parser import ConfigParser
+from sources.conf_reader import ConfReader
 
 configFile = "config.ini"
 scenarioFile = "Scenario-1.ini"
 
 @pytest.fixture()
 def setup_tests():
-    ConfigParser.read_configuration()
-    host=""
-    port=""
-    url = f"http:// {host}:{port}"
-    user =
+    user = ConfReader.read_configuration()
 
 
 @pytest.mark.parametrize("url,user_name,user_password", ["http://localhot:3002/users/add_user","Shikma","AAA"])
-def test_add_user(url, user_name, user_password):
+def test_add_user(url, setup_test):
     users_service.add_user(url, user_name, user_password)
     # assert
 

@@ -2,11 +2,13 @@ import hashlib
 
 
 class User:
-    def __init__(self, name, password):
+
+    def __init__(self, name, password, new_password):
         self.password = self.parse_password(password)
         self.name = name
         self.friends = []
         self.playlists = {}
+        self.new_passwrd =
 
     def parse_password(self, password):
         return hashlib.md5(password.encode()).hexdigest()
