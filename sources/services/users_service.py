@@ -5,6 +5,7 @@ import json
 
 
 def add_user(url, user_name, user_password):
+    url = url + "/users/add_user"
     user = User(user_name, user_password)
     user_json = json.dumps(user.__dict__)
     response = requests.post(url, user_json)
@@ -15,7 +16,7 @@ def get_user(url, user_name):
     return response
 
 
-def change_user_password(url, user_name, user_password,new_password):
+def change_user_password(url, user_name, user_password, new_password):
     fields = [user_name, user_password, new_password]
     user_json = json_util.create_json(fields)
     response = requests.post(url, user_json)

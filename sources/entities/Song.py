@@ -5,7 +5,6 @@ class Song:
         self.year = year
         self.genre = genre
         self.performer = performer
-        self.rating = 0
 
     def upvote(self):
         self.rating += 1
