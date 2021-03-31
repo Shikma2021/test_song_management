@@ -1,8 +1,17 @@
-import requests
+from source.services.base_service import BaseService
 from sources.entities import User
-from utils import json_util
-import json
+from sources.infra.api_manager import api
 
+class UserService(BaseService):
+    USERS = '/users'
+
+    def add_users(self, users):
+        if not isinstance(users, list):
+            users = [users]
+
+        uri = '{}/{}/add_user'.format(self.BASE, self.USERS)
+        for u in users:
+            yield api.post(uri, u)
 
 def add_user(url, user_name, user_password):
     url = url + "/users/add_user"

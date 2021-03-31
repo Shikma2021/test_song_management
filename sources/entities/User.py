@@ -1,14 +1,19 @@
 import hashlib
+import json
 
+class User(object):
 
-class User:
-
-    def __init__(self, name, password, new_password):
-        self.password = self.parse_password(password)
+    def __init__(self, name, password):
+        self.password = password
         self.name = name
         self.friends = []
         self.playlists = {}
-        self.new_passwrd =
+
+    def __repr__(self):
+        return json.dumps(dict(
+            name=self.name,
+            password=self.password
+        ))
 
     def parse_password(self, password):
         return hashlib.md5(password.encode()).hexdigest()
