@@ -1,6 +1,6 @@
 import pytest
-from sources.users_management import add_user
-from sources.users_management import get_user
+from sources.services.users_service import add_user
+from sources.services.users_service import get_user
 
 # @pytest.fixture()
 # def setup_tests():
