@@ -10,10 +10,9 @@ def add_user(url, user_name, user_password):
     response = requests.post(url, user_json)
 
 
-def get_user(url,user_name):
+def get_user(url, user_name):
     response = requests.get(url)
     return response
-
 
 
 def change_user_password(url, user_name, user_password,new_password):
@@ -22,21 +21,22 @@ def change_user_password(url, user_name, user_password,new_password):
     response = requests.post(url, user_json)
 
 
-def get_ranked_songs(url,):
+def get_ranked_songs(url, operator, rank):
     response = requests.get(url)
     return response
 
+
 def add_friend():
+    pass
 
 
-
-# def remove_friend():
-# def remove_all_friends():
-#
-# def remove_user(url):
-#     response = requests.delete(url)
-#     return response
+def remove_friend():
+    pass
 
 
+def remove_all_friends():
+    pass
 
 
+def remove_user(url):
+    pass

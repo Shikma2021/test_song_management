@@ -12,15 +12,16 @@ from sources.services.users_service import get_user
 @pytest.mark.parametrize("url,user_name,user_password", ["http://localhot:3002/users/add_user","Shikma","AAA"])
 def test_add_user(url, user_name, user_password):
     add_user(url, user_name, user_password)
-    assert
+    # assert
 
 
 @pytest.mark.parametrize("url,user_name", ["http://localhot:3002/users/add_user", "Shikma"])
-def test_get_user(url, user_password):
-    get_user(url, user_name, user_password)
-    assert
+def test_get_user(url, user_name):
+    get_user(url, user_name)
+    # assert
 
-@pytest.mark.parametrize("url,user_name", ["Shikma"])
-def test_remove_user(url, user_password):
-    get_user(url, user_name, user_password)
-    assert
+
+@pytest.mark.xfail("Missing Implementation")
+def test_remove_user(url, user_name):
+    get_user(url, user_name)
+    # assert
