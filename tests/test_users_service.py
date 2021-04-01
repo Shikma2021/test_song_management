@@ -4,6 +4,7 @@ from sources.services.users_service import UserService
 from sources.entities import User
 from infra.cofig_parser import ConfigParser
 from sources.create_entities import *
+import pytest_html
 
 configFile = "config.ini"
 
@@ -39,6 +40,6 @@ def test_change_user_password():
     UserService.change_user_password()
 
 
-@pytest.mark.xfail("Missing Implementation")
+@pytest.mark.xfail("Missing Implementation For Remove User")
 def test_remove_user(url, user_name):
     UserService .remove_user(url,user_name)

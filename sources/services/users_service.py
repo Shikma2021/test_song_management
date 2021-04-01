@@ -21,8 +21,8 @@ class UserService:
         return requests.post(url, user.__repr__(), headers={'Content-Type':'application/json'})
 
     def get_user(url, user_name):
-        url = url + "/users/get_user"
-        response = requests.get(url)
+        url = f"{url}/users/get_user?user_name={user_name}"
+        response = requests.get(url, headers={'Content-Type':'application/json'})
         return response
 
     def change_user_password(url, user_name, user_password, new_password):
