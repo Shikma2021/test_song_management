@@ -23,8 +23,9 @@ def setup_tests():
 
 def test_add_user(setup_tests):
     user = create_user()
-    UserService.add_user(setup_tests, user)
-    response = UserService.get_user()(setup_tests, user)
+    url = setup_tests
+    UserService.add_user(url, user)
+    response = UserService.get_user(url, user.user_name)
     assert user == response
 
 

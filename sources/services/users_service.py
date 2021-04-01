@@ -18,7 +18,7 @@ class UserService:
 
     def add_user(url, user):
         url = url + "/users/add_user"
-        return requests.post(url, user.__repr__())
+        return requests.post(url, user.__repr__(), headers={'Content-Type':'application/json'})
 
     def get_user(url, user_name):
         url = url + "/users/get_user"
