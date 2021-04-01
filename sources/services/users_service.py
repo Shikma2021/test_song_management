@@ -30,10 +30,6 @@ class UserService:
         # user_json = json_util.create_json(fields)
         # response = requests.post(url, user_json)
 
-    def get_ranked_songs(url, operator, rank):
-        response = requests.get(url)
-        return response
-
     def add_friend(self):
         pass
 
