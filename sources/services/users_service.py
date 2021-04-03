@@ -1,37 +1,35 @@
-from sources.services.base_service import BaseService
-from sources.entities import User
-import json
-import requests
 from infra.api_manager import api
 
 
 class UserService:
     USERS = '/users'
 
-    # def add_users(self, users):
-    #     if not isinstance(users, list):
-    #         users = [users]
-    #
-    #     uri = '{}/{}/add_user'.format(self.BASE, self.USERS)
-    #     for u in users:
-    #         yield api.post(uri, u)
+    def __init__(self, baseurl):
+        self.baseurl = baseurl
 
-    def add_user(url, user):
-        url = url + "/users/add_user"
-        return requests.post(url, user.__repr__(), headers={'Content-Type':'application/json'})
+    def add_users(self, users):
+        if not isinstance(users, list):
+            users = [users]
 
-    def get_user(url, user_name):
-        url = f"{url}/users/get_user?user_name={user_name}"
-        response = requests.get(url, headers={'Content-Type':'application/json'})
-        return response
+        url = '{}/{}/add_user'.format(self.baseurl, self.USERS)
+        for u in users:
+            yield api.post(url, u)
 
-    def change_user_password(url, user_name, user_password, new_password):
-        fields = [user_name, user_password, new_password]
-        # user_json = json_util.create_json(fields)
-        # response = requests.post(url, user_json)
+    def get_user(self, name, supress=False):
+        url = '{}/{}/get_user'.format(self.baseurl, self.USERS)
+        resp = api.get(url, user_name=name)
+        if not supress:
+            assert resp['message'] == 'OK'
 
-    def add_friend(self):
-        pass
+        return resp['data'] if 'error' not in resp else None
+
+    def add_friend(self, user, friend):
+        url = '{}/{}/add_friend'.format(self.baseurl, self.USERS)
+        return api.put(url, dict(
+            user_name=user.user_name,
+            user_password=user.user_password,
+            friend_name=friend.user_name
+        ))
 
     def remove_friend(self):
         pass
@@ -41,3 +39,11 @@ class UserService:
 
     def remove_user(self):
         pass
+
+    def change_password(self, user, new_pass):
+        url = '{}/{}/change_password'.format(self.baseurl, self.USERS)
+        return api.put(url, dict(
+            user_name=user.user_name,
+            user_password=user.user_password,
+            user_new_password=new_pass
+        ))

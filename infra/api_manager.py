@@ -1,8 +1,10 @@
 import requests
+import json
+
 
 def validate_res_ok(f):
-    def wrapper(*a, **kw):
-        r = f(*a, **kw)
+    def wrapper(*args, **kwargs):
+        r = f(*args, **kwargs)
 
         if r.status_code != 200:
             raise Exception('Error from api: {}'.format(r.text()))
@@ -11,28 +13,30 @@ def validate_res_ok(f):
 
     return wrapper
 
+
 class APIManager(object):
+    HEADERS = {'Content-Type': 'application/json'}
 
     def __init__(self):
         pass
 
     @validate_res_ok
-    def get(self, url, params):
-        url = '{}?{}'.format(url, ','.join(['{}={}'.format(k,v) for k,v in params]))
+    def get(self, url, **params):
+        url = '{}?{}'.format(url, ','.join(['{}={}'.format(k,v) for k,v in params.items()]))
 
-        return requests.get(uri)
-
-    @validate_res_ok
-    def post(self, url, data):
-        return self._call('POST', url, data)
+        return requests.get(url, headers=self.HEADERS)
 
     @validate_res_ok
-    def put(self, url, data):
-        return self._call('PUT', url, data)
+    def post(self, url, data={}):
+        return requests.post(url, json.dumps(data), headers=self.HEADERS)
 
     @validate_res_ok
-    def delete(self, url, data):
-        return self._call('DELETE', url, data)
+    def put(self, url, data={}):
+        return requests.put(url, json.dumps(data), headers=self.HEADERS)
+
+    @validate_res_ok
+    def delete(self, url):
+        return requests.delete(url, headers=self.HEADERS)
 
 
 api = APIManager()

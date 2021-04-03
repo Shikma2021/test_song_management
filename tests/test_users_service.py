@@ -1,53 +1,95 @@
 import pytest
-import configparser
 from sources.services.users_service import UserService
-from sources.entities import User
+from sources.services.admin_service import AdminService
 from infra.cofig_parser import ConfigParser
 from sources.data_helper import *
 import pytest_html
 
-configFile = "config.ini"
+
+@pytest.fixture(autouse=True)
+def user_service():
+    [user_service, admin_service] = ConfigParser.parse([UserService, AdminService])
+    yield user_service
+
+    admin_service.delete_all_users()
+    admin_service.delete_all_songs()
 
 
-@pytest.fixture()
-def setup_tests():
-    # config_parser = ConfigParser.read_configuration(configFile).read()
-    # for section in config_parser.sections():
-    #     host = config_parser.getint(section,'host')
-    #     port = config_parser.getint(section,'port')
-    # url = f"http://{host}:{port}"
-    url = f"http://127.0.0.1:3002"
-    yield url
-    # yield
-    #delete users & songs
-
-
-def test_add_user(setup_tests):
+def test_add_user(user_service):
+    '''
+    test if users can be added to the system
+    :param user_service:
+    :return:
+    '''
     user = create_user()
-    url = setup_tests
-    UserService.add_user(url, user)
-    response = UserService.get_user(url, user.user_name)
-    assert user == response
+    #UserService.add_user(url, user)
+    for response in user_service.add_users(user):
+        assert response['messgae'] == 'OK'
+
+    validate_user = user_service.get_user(user.user_name)
+    assert validate_user['user_name'] == user.user_name
 
 
-def test_add_existing_user(setup_tests):
+def test_add_friend_to_user(user_service):
     user = create_user()
-    url = setup_tests
-    UserService.add_user(url, user)
-    response = UserService.get_user(url, user.user_name)
-    assert user == response
+    friend = create_user()
 
+    for response in user_service.add_users([user, friend]):
+        assert response['messgae'] == 'OK'
 
-def test_change_user_password():
+    assert user_service.add_friend(user, friend)['message'] == 'OK'
+
+    user = user_service.get_user(user.user_name)
+    assert friend.user_name in user.friends
+
+def test_fail_add_friend(user_service):
     user = create_user()
-    url = setup_tests
-    UserService.add_user(url, user)
-    UserService.change_user_password()
-    response = UserService.get_user(url, user.user_name)
+    friend = create_user()
 
+    for response in user_service.add_users([user]):
+        assert response['messgae'] == 'OK'
 
-def test_add_friend(url, user_name):
-    UserService .remove_user(url,user_name)
+    res = user_service.add_friend(user, friend)
+
+    assert 'error' in res
+
+def test_friend_of_friend(user_service):
+    user = create_user()
+    friend = create_user()
+
+    for response in user_service.add_users([user, friend]):
+        assert response['messgae'] == 'OK'
+
+    assert user_service.add_friend(user, friend)['message'] == 'OK'
+
+    friend = user_service.get_user(friend.user_name)
+    assert user.user_name in friend.friends
+
+def test_add_friend_twice(user_service):
+    user = create_user()
+    friend = create_user()
+
+    for response in user_service.add_users([user, friend]):
+        assert response['messgae'] == 'OK'
+
+    assert user_service.add_friend(user, friend)['message'] == 'OK'
+    assert 'error' in user_service.add_friend(user, friend)
+
+def test_change_password(user_service):
+    user = create_user()
+    friend = create_user()
+
+    for response in user_service.add_users(user):
+        assert response['messgae'] == 'OK'
+
+    new_pass = randomise(5)
+    user_service.change_password(user, new_pass)
+
+    res = user_service.add_friend(Bunch(
+        user_name=user.user_name,
+        user_password=new_pass
+    ), friend)
+    assert res['message'] == 'OK'
 
 
 @pytest.mark.xfail("Missing Implementation For Remove User")
