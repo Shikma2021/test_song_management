@@ -2,3 +2,6 @@ server:
   host: 127.0.0.1
   port: 3002
   schema: http
+
+users:
+  db_path: C:\Users\Shikma\songs_server\users.json

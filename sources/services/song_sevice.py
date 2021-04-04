@@ -42,6 +42,4 @@ class SongService(object):
 
     def search(self, rank, op):
         url = '{}/{}/ranked_songs'.format(self.baseurl, self.SONGS)
-        return api.get(url, dict(
-            rank=rank,
-            op=op))
+        return api.get(url, rank=rank, op=op)

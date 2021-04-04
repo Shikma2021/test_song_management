@@ -238,20 +238,15 @@ def _create_song_with_N_votes(N, services):
         songs_service.upvote(u, song)
 
 
-@pytest.mark.parametrize("rank,op", [(3, "eq"), (4, 'less'), (4, 'greater')])
-def test_search_songs(services, rank, op):
+@pytest.mark.parametrize("songs_with_ranks,rank,op,expected_result", [((2,3,1), 3, "eq", 1), ((2,2,5), 4, 'less', 2), ((3,1,0), 4, 'greater', 0)])
+def test_search_songs(services, songs_with_ranks, rank, op, expected_result):
     songs_service, _ = services
-    # create song with 3 votes
-    _create_song_with_N_votes(3, services)
+
+    for i in songs_with_ranks:
+        _create_song_with_N_votes(i, services)
 
     res = songs_service.search(rank, op)
-    assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 2
-
-    res = songs_service.search(rank, op)
-    assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 2
-
-    res = songs_service.search(rank, op)
-    assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 1
+    assert 'message' in res and res['message'] == 'OK' and len(res['data']) == expected_result
 
 
 def test_search_invalid_op(services):
