@@ -29,8 +29,8 @@ class SongService(object):
     def _vote(self, user, song, updown):
         url = '{}/{}/{}'.format(self.baseurl, self.SONGS, updown)
         return api.put(url, dict(
-            user_name=user['user_name'],
-            user_password=user['user_password'],
+            user_name=user.user_name,
+            user_password=user.user_password,
             song_title=song['song_title']
         ))
 
@@ -44,5 +44,4 @@ class SongService(object):
         url = '{}/{}/ranked_songs'.format(self.baseurl, self.SONGS)
         return api.get(url, dict(
             rank=rank,
-            op=op
-        ))
+            op=op))

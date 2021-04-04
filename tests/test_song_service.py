@@ -106,15 +106,13 @@ def test_upvote_wrong_password(services):
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
 
-    res = songs_service.upvote(dict(
+    res = songs_service.upvote(User(
         user_name=user.user_name,
         user_password=randomise(5)
     ), song)
 
     assert 'error' in res
 
-
-## HERE
 
 def test_downvote(services):
     songs_service, user_service = services
@@ -218,7 +216,7 @@ def test_downvote_wrong_password(services):
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
 
-    res = songs_service.downvote(dict(
+    res = songs_service.downvote(User(
         user_name=user.user_name,
         user_password=randomise(5)
     ), song)
@@ -234,28 +232,25 @@ def _create_song_with_N_votes(N, services):
     assert 'message' in resp and resp['message'] == 'OK'
 
     for u in [create_user() for _ in range(N)]:
-        for response in user_service.add_users(user):
+        for response in user_service.add_users(u):
             assert response['messgae'] == 'OK'
 
         songs_service.upvote(u, song)
 
 
-def test_search_songs(services):
+@pytest.mark.parametrize("rank,op", [(3, "eq"), (4, 'less'), (4, 'greater')])
+def test_search_songs(services, rank, op):
     songs_service, _ = services
     # create song with 3 votes
     _create_song_with_N_votes(3, services)
-    #create song with 7 votes
-    _create_song_with_N_votes(7, services)
-    #create song with 0 votes
-    _create_song_with_N_votes(0, services)
 
-    res = songs_service.search(2, 'greater')
+    res = songs_service.search(rank, op)
     assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 2
 
-    res = songs_service.search(9, 'less')
+    res = songs_service.search(rank, op)
     assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 2
 
-    res = songs_service.search(7, 'eq')
+    res = songs_service.search(rank, op)
     assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 1
 
 

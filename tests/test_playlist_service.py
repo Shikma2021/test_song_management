@@ -9,7 +9,7 @@ from infra.cofig_parser import ConfigParser
 
 @pytest.fixture()
 def services():
-    [song_service, user_playlist_service, admin_service] = ConfigParser.parse([SongService, UserPlaylistService, AdminService])
+    [song_service, user_playlist_service, admin_service, ] = ConfigParser.parse([SongService, UserPlaylistService, AdminService])
     yield [song_service, user_playlist_service]
 
     admin_service.delete_all_users()

@@ -2,6 +2,7 @@ from infra.api_manager import api
 from sources.services.users_service import UserService
 from sources.services.song_sevice import SongService
 
+
 class UserPlaylistService(UserService):
     PLAYLIST = '/playlists'
 
@@ -27,5 +28,5 @@ class UserPlaylistService(UserService):
         return api.get(url, dict(
             user_name=user.user_name,
             user_password=user.user_password,
-            playlist_name=name
+            playlist_name=user.user_name
         ))
