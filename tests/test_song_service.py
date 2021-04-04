@@ -6,6 +6,7 @@ from sources.services.users_service import UserService
 from sources.services.admin_service import AdminService
 from infra.cofig_parser import ConfigParser
 
+
 @pytest.fixture()
 def services():
     [song_service, user_service, admin_service] = ConfigParser.parse([SongService, UserService, AdminService])
@@ -15,7 +16,6 @@ def services():
 
     yield [song_service, user_service]
 
-    #delete users & songs
 
 def test_add_song(services):
     songs_service, _ = services
@@ -26,6 +26,7 @@ def test_add_song(services):
     song = songs_service.get_song(song['song_title'])
     assert song is not None
 
+
 def test_add_song_twice(services):
     songs_service, _ = services
     song = create_song()
@@ -33,6 +34,7 @@ def test_add_song_twice(services):
     assert 'message' in resp and resp['message'] == 'OK'
     resp = songs_service.add_song(song)
     assert 'error' in resp
+
 
 def test_upvote(services):
     songs_service, user_service = services
@@ -50,6 +52,7 @@ def test_upvote(services):
     song = songs_service.get_song(song['song_title'])
     assert song['rating'] == 1
 
+
 def test_upvote_twice(services):
     songs_service, user_service = services
     user = create_user()
@@ -66,6 +69,7 @@ def test_upvote_twice(services):
 
     assert 'message' not in res or res['message'] != 'OK'
 
+
 def test_user_notexists_upvote(services):
     songs_service, user_service = services
     user = create_user()
@@ -78,6 +82,7 @@ def test_user_notexists_upvote(services):
 
     assert 'error' in res
 
+
 def test_upvote_song_notexists(services):
     songs_service, user_service = services
     user = create_user()
@@ -88,6 +93,7 @@ def test_upvote_song_notexists(services):
 
     res = songs_service.upvote(user, song)
     assert 'error' in res
+
 
 def test_upvote_wrong_password(services):
     songs_service, user_service = services
@@ -133,6 +139,7 @@ def test_downvote(services):
     song = songs_service.get_song(song['song_title'])
     assert song['rating'] == 2
 
+
 def test_downvote_not_below_zero(services):
     songs_service, user_service = services
     user = create_user()
@@ -148,6 +155,7 @@ def test_downvote_not_below_zero(services):
 
     song = songs_service.get_song(song['song_title'])
     assert song['rating'] == 0
+
 
 def test_downvote_twice(services):
     songs_service, user_service = services
@@ -173,6 +181,7 @@ def test_downvote_twice(services):
     song = songs_service.get_song(song['song_title'])
     assert song['rating'] == 2
 
+
 def test_user_notexists_downvote(services):
     songs_service, user_service = services
     user = create_user()
@@ -185,6 +194,7 @@ def test_user_notexists_downvote(services):
 
     assert 'error' in res
 
+
 def test_downvote_song_notexists(services):
     songs_service, user_service = services
     user = create_user()
@@ -195,6 +205,7 @@ def test_downvote_song_notexists(services):
 
     res = songs_service.downvote(user, song)
     assert 'error' in res
+
 
 def test_downvote_wrong_password(services):
     songs_service, user_service = services
@@ -214,8 +225,9 @@ def test_downvote_wrong_password(services):
 
     assert 'error' in res
 
+
 def _create_song_with_N_votes(N, services):
-    songs_service, user_service = service
+    songs_service, user_service = services
     song = create_song()
 
     resp = songs_service.add_song(song)
@@ -227,8 +239,9 @@ def _create_song_with_N_votes(N, services):
 
         songs_service.upvote(u, song)
 
+
 def test_search_songs(services):
-    songs_service, _ = service
+    songs_service, _ = services
     # create song with 3 votes
     _create_song_with_N_votes(3, services)
     #create song with 7 votes
@@ -245,8 +258,9 @@ def test_search_songs(services):
     res = songs_service.search(7, 'eq')
     assert 'message' in res and res['message'] == 'OK' and len(res['data']) == 1
 
+
 def test_search_invalid_op(services):
-    songs_service, _ = service
+    songs_service, _ = services
 
     res = songs_service.search(2, 'XXX')
     assert 'error' in res

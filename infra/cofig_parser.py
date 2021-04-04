@@ -1,9 +1,6 @@
-import configparser
-import inspect
-from os.path import dirname , join , realpath
+from os.path import dirname ,  realpath
 import yaml
 
-CONFIG_DIR_NAME = "config"
 
 class ConfigParser:
     configFile = "{}\..\config\config.yaml".format(dirname(realpath(__file__)))

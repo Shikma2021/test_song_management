@@ -1,6 +1,8 @@
 from infra.api_manager import api
 
+
 class SongService(object):
+
     SONGS = '/songs'
     PLAYLIST = '/playlist'
 

@@ -6,6 +6,7 @@ from sources.services.user_playlist_service import UserPlaylistService
 from sources.services.admin_service import AdminService
 from infra.cofig_parser import ConfigParser
 
+
 @pytest.fixture()
 def services():
     [song_service, user_playlist_service, admin_service] = ConfigParser.parse([SongService, UserPlaylistService, AdminService])
@@ -32,6 +33,7 @@ def test_add_song_to_playlist(services):
 
     assert 'message' in res and res['message'] == 'OK'
 
+
 def test_add_song_twice_to_playlist(services):
     songs_service, playlist_service = services
     user = create_user()
@@ -50,6 +52,7 @@ def test_add_song_twice_to_playlist(services):
 
     assert 'error' in res
 
+
 def test_add_same_playlist_name_to_mul_users(services):
     _, playlist_service = services
     playlist = randomise(5)
@@ -60,6 +63,7 @@ def test_add_same_playlist_name_to_mul_users(services):
 
         res = playlist_service.add_playlist(u, playlist)
         assert 'message' in res and res['message'] == 'OK'
+
 
 def test_add_playlist(services):
     _, playlist_service = services
@@ -73,6 +77,7 @@ def test_add_playlist(services):
 
     user = playlist_service.get_user(user.user_name)
     assert playlist_name in user['playlists']
+
 
 def test_add_playlist_twice(services):
     _, playlist_service = services
@@ -89,12 +94,14 @@ def test_add_playlist_twice(services):
 
     assert 'error' in playlist_service.add_playlist(user, playlist_name)
 
+
 def test_add_playlist_to_noexisting_user(services):
     _, playlist_service = services
     user = create_user()
     playlist_name = randomise(5)
 
     assert 'error' in playlist_service.add_playlist(user, playlist_name)
+
 
 def test_get_playlist(services):
     _, playlist_service = services
@@ -109,6 +116,7 @@ def test_get_playlist(services):
 
     user = playlist_service.get_user(user.user_name)
     assert all([pl in user['playlists'] for pl in playlists])
+
 
 def test_add_playlist_with_wrong_user(services):
     songs_service, playlist_service = services

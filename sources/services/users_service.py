@@ -13,7 +13,7 @@ class UserService:
 
         url = '{}/{}/add_user'.format(self.baseurl, self.USERS)
         for u in users:
-            yield api.post(url, u)
+            yield api.post(url, u.__dict__)
 
     def get_user(self, name, supress=False):
         url = '{}/{}/get_user'.format(self.baseurl, self.USERS)
