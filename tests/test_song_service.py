@@ -1,5 +1,5 @@
 import pytest
-from sources.data_helper import *
+from sources import data_helper
 import pytest_html
 from sources.services.song_sevice import SongService
 from sources.services.users_service import UserService

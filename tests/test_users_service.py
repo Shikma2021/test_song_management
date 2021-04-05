@@ -96,7 +96,7 @@ def test_remove_user(url, user_name):
     UserService .remove_user(url,user_name)
 
 
-@pytest.mark.xfail(reason  ="Missing Implementation For Remove Friend")
+@pytest.mark.xfail(reason = "Missing Implementation For Remove Friend")
 def test_remove_friend(url, user_name):
     UserService .remove_friend(url,user_name)
 
