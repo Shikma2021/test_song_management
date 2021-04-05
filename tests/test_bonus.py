@@ -11,6 +11,7 @@ def settings():
     user_service, config = ConfigParser.parse(UserService, with_config=True)
     yield user_service, config
 
+
 def test_check_password(settings):
     user_service, config = settings
     user = create_user()

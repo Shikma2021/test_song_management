@@ -12,7 +12,7 @@ class UserPlaylistService(UserService):
             user_name=user.user_name,
             user_password=user.user_password,
             playlist_name=playlist,
-            song_title=song.song_title
+            song_title=song.get("song_title")
         ))
 
     def add_playlist(self, user, name):
