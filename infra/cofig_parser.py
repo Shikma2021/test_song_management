@@ -3,7 +3,7 @@ import yaml
 
 
 class ConfigParser:
-    configFile = "{}\..\config\config.yaml".format(dirname(realpath(__file__)))
+    configFile = "./config/config.yaml"
 
     @classmethod
     def parse(self, types, with_config=False):

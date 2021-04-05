@@ -14,7 +14,7 @@ def admin_service():
 def test_delete_all_users(admin_service):
     user = create_user()
     for response in admin_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     admin_service.delete_all_users()
 
@@ -33,7 +33,7 @@ def test_delete_all_songs(admin_service):
     assert song is None
 
 
-@pytest.mark.xfail("Wrong Implementation")
+@pytest.mark.xfail(reason = "Wrong Implementation")
 def test_set_songs(admin_service):
     N = 5
     songs = [create_song() for _ in range(N)]
@@ -45,7 +45,7 @@ def test_set_songs(admin_service):
     assert song is not None
 
 
-@pytest.mark.xfail("Wrong Implementation")
+@pytest.mark.xfail(reason = "Wrong Implementation")
 def test_set_users(admin_service):
     N = 5
     users = {}

@@ -23,7 +23,7 @@ def test_add_song_to_playlist(services):
     playlist = randomise(5)
 
     for response in playlist_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -41,7 +41,7 @@ def test_add_song_twice_to_playlist(services):
     playlist = randomise(5)
 
     for response in playlist_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -59,7 +59,7 @@ def test_add_same_playlist_name_to_multi_users(services):
 
     for u in [create_user() for _ in range(3)]:
         for response in playlist_service.add_users(u):
-            assert response['messgae'] == 'OK'
+            assert response['message'] == 'OK'
 
         res = playlist_service.add_playlist(u, playlist)
         assert 'message' in res and res['message'] == 'OK'
@@ -71,7 +71,7 @@ def test_add_playlist(services):
     playlist_name = randomise(5)
 
     for response in playlist_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     playlist_service.add_playlist(user, playlist_name)
 
@@ -85,7 +85,7 @@ def test_add_playlist_twice(services):
     playlist_name = randomise(5)
 
     for response in playlist_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     playlist_service.add_playlist(user, playlist_name)
 
@@ -109,7 +109,7 @@ def test_get_playlist(services):
     playlists = [randomise(5) for _ in range(4)]
 
     for response in playlist_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     for playlist in playlists:
         playlist_service.add_playlist(user, playlist)
@@ -125,7 +125,7 @@ def test_add_playlist_with_wrong_user(services):
     playlist = randomise(5)
 
     for response in playlist_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'

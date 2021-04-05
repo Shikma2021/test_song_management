@@ -42,7 +42,7 @@ def test_upvote(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -59,7 +59,7 @@ def test_upvote_twice(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -89,7 +89,7 @@ def test_upvote_song_notexists(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     res = songs_service.upvote(user, song)
     assert 'error' in res
@@ -101,7 +101,7 @@ def test_upvote_wrong_password(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -120,7 +120,7 @@ def test_downvote(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -128,7 +128,7 @@ def test_downvote(services):
     #upvote by 3
     for u in [create_user() for _ in range(3)]:
         for response in user_service.add_users(u):
-            assert response['messgae'] == 'OK'
+            assert response['message'] == 'OK'
 
         songs_service.upvote(u, song)
 
@@ -144,7 +144,7 @@ def test_downvote_not_below_zero(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -161,7 +161,7 @@ def test_downvote_twice(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -169,7 +169,7 @@ def test_downvote_twice(services):
     # upvote by 3
     for u in [create_user() for _ in range(3)]:
         for response in user_service.add_users(u):
-            assert response['messgae'] == 'OK'
+            assert response['message'] == 'OK'
 
         songs_service.upvote(u, song)
 
@@ -199,7 +199,7 @@ def test_downvote_song_notexists(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     res = songs_service.downvote(user, song)
     assert 'error' in res
@@ -211,7 +211,7 @@ def test_downvote_wrong_password(services):
     song = create_song()
 
     for response in user_service.add_users(user):
-        assert response['messgae'] == 'OK'
+        assert response['message'] == 'OK'
 
     resp = songs_service.add_song(song)
     assert 'message' in resp and resp['message'] == 'OK'
@@ -233,7 +233,7 @@ def _create_song_with_N_votes(N, services):
 
     for u in [create_user() for _ in range(N)]:
         for response in user_service.add_users(u):
-            assert response['messgae'] == 'OK'
+            assert response['message'] == 'OK'
 
         songs_service.upvote(u, song)
 

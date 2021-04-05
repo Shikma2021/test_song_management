@@ -1,6 +1,6 @@
 import random
 import string
-from entities.User import User
+from sources.entities.User import User
 
 
 def create_user():

@@ -4,4 +4,4 @@ server:
   schema: http
 
 users:
-  db_path: C:\Users\SHIKMA\PycharmProjects\songs_server\users.json
+  db_path: /home/eytan/workStuff/python_stuff/songs_book/users.json
