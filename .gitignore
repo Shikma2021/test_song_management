@@ -1,0 +1,7 @@
+.idea/__pycache__/
+.pytest_cache/
+.vscode/
+*/__pychache/
+*/__pychache/*
+*.pyc
+reports/

@@ -1,0 +1,7 @@
+server:
+  host: 127.0.0.1
+  port: 3002
+  schema: http
+
+users:
+  db_path: /home/eytan/workStuff/python_stuff/songs_book/users.json
