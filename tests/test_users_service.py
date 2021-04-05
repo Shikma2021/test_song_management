@@ -60,7 +60,7 @@ def test_friend_of_friend(user_service):
     assert user_service.add_friend(user, friend)['message'] == 'OK'
 
     friend = user_service.get_user(friend.user_name)
-    assert user.user_name in friend.friends
+    assert user.user_name in friend.get("friends")
 
 
 def test_add_friend_twice(user_service):
