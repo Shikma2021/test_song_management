@@ -53,7 +53,7 @@ def test_add_song_twice_to_playlist(services):
     assert 'error' in res
 
 
-def test_add_same_playlist_name_to_mul_users(services):
+def test_add_same_playlist_name_to_multi_users(services):
     _, playlist_service = services
     playlist = randomise(5)
 
